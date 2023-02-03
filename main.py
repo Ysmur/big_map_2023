@@ -2,7 +2,7 @@ import sys
 import requests
 
 
-def get_paint(ll, delta, z, type, zoom):  # Запрашиваем размер(долготу и широту), дельты, зум, масштаб, тип
+def get_paint(ll, delta, zoom, type):  # Запрашиваем размер(долготу и широту), дельты, зум, тип
     str_ll = ll.join(",")
     str_delta = delta.join(",")
     map_request = f"http://static-maps.yandex.ru/1.x/?ll={str_ll}&z={zoom}&spn={str_delta}&l={type}"
