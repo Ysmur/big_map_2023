@@ -19,7 +19,7 @@ class App:
         color = color_inactive
         active = False
         self.text = ' '
-        font = int(input_box.width // len(self.text) * 1.5)
+        font = 36
         self.font = pygame.font.Font('pixeboy.ttf', font)
 
 
@@ -37,11 +37,6 @@ class App:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 2:
                         pass
-                    if input_box.collidepoint(event.pos):
-                        # Toggle the active variable.
-                        active = not active
-                    else:
-                        active = False
                 if event.type == pygame.MOUSEWHEEL:
                     self.delta = str(min(4, max(1.5, float(self.map.delta) + event.y / 100)))
                 if event.type == pygame.KEYDOWN:
@@ -51,20 +46,20 @@ class App:
                         self.text = self.text[:-1]
                     else:
                         self.text += event.unicode
-                    print(self.text)
 
-            txt_surface = self.font.render(self.text, True, color)
+
+            self.txt_surface = self.font.render(self.text, True, color)
             self.draw()
             clock.tick(FPS)
 
     def draw(self):
         self.screen.fill((0, 0, 0))
-        txt_surface = self.font.render(self.text, True, (255, 255, 255))
         # self.screen.blit(self.map.get_image(), (0, 0))
 
         for element in self.interface:  # рисуем интерфейс
             element.draw(self.screen)
 
+        self.screen.blit(self.txt_surface, (100, 100))
         pygame.display.update()
 
 
