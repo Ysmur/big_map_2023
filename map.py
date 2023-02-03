@@ -63,5 +63,5 @@ class Map:
             sys.exit(2)
 
 
-map = Map('map', ('0.9', '0.9'), False, 5)
-map.get_paint()
+# map = Map('map', ('0.9', '0.9'), False, 5)
+# map.get_paint()

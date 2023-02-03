@@ -1,6 +1,8 @@
 from map import Map
 from interface import Label, Button
 import pygame
+import os
+import sys
 
 BUTTON_IMAGE = pygame.image.load('button.png')
 WIDTH, HEIGHT = 1280, 720
@@ -12,7 +14,7 @@ class App:
         pygame.init()
         pygame.display.set_caption('Some app')
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), vsync=True)
-        self.map = Map()
+        self.map = Map('map', ('0.9', '0.9'), False, 5)
 
         input_box = pygame.Rect(100, 100, 140, 32)
         color_inactive = (100, 100, 100)
@@ -63,6 +65,25 @@ class App:
             self.draw()
             clock.tick(FPS)
 
+    def load_image(self, name, colorkey=None):
+        """
+        Загрузка изображения
+        :param name: имя файла
+        """
+        # если файл не существует, то выходим
+        if not os.path.isfile(name):
+            print(f"Файл с изображением '{name}' не найден")
+            sys.exit()
+        image = pygame.image.load(name)
+        if colorkey is not None:
+            image = image.convert()
+            if colorkey == -1:
+                colorkey = image.get_at((0, 0))
+            image.set_colorkey(colorkey)
+        else:
+            image = image.convert_alpha()
+        return image
+
     def action(self, button):
         if button.text == 'search':
             # поиск по адресу
@@ -80,7 +101,9 @@ class App:
         for element in self.buttons + self.labels:  # рисуем интерфейс
             element.draw(self.screen)
 
+        fon = pygame.transform.scale(self.load_image('map.png'), (WIDTH, HEIGHT))
         self.screen.blit(self.txt_surface, (100, 100))
+        self.screen.blit(fon, (150, 150))
         pygame.display.update()
 
 
