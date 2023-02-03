@@ -11,13 +11,12 @@ class App:
         pygame.init()
         pygame.display.set_caption('Some app')
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), vsync=True)
-        # self.map = Map()
+        self.map = Map()
 
-        some_button = Button((100, 285), BUTTON_IMAGE, 'button')
+        search_button = Button((100, 285), BUTTON_IMAGE, 'search')
+        clear_button = Button((100, 200), BUTTON_IMAGE, 'clear')
         search_text_label = Label((500, 75), 'Some address', 70)
-        self.interface = (some_button, search_text_label)
-
-        self.buttons = (some_button,)
+        self.buttons = (search_button, clear_button)
         self.labels = (search_text_label,)
 
         clock = pygame.time.Clock()
@@ -32,23 +31,31 @@ class App:
                         for button in self.buttons:
                             if button.rect.collidepoint(event.pos):  # если мышка над кнопкой
                                 self.action(button())  # делаем что-то в action
+                            else:
+                                # указываем точку на карте, пока None
+                                self.map.selected_point = None
                     elif event.button == 2:
+                        # нахождение организации
                         pass
                 elif event.type == pygame.MOUSEWHEEL:
                     self.delta = str(min(4, max(1.5, float(self.map.delta) + event.y / 100)))
                 elif event.type == pygame.KEYDOWN:
                     if event.unicode:
+                        # вбиваем в поисковую строку
                         pass
-
 
             self.draw()
             clock.tick(FPS)
 
     def action(self, button):
-        pass
+        if button.text == 'search':
+            # поиск по адресу
+            pass
+        elif button.text == 'clear':
+            self.map.selected_point = None
 
     def draw(self):
-        # self.screen.blit(self.map.get_image(), (0, 0))
+        self.screen.blit(self.map.get_image(), (0, 0))
 
         for element in self.buttons + self.labels:  # рисуем интерфейс
             element.draw(self.screen)
