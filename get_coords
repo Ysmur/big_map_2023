@@ -1,0 +1,3 @@
+def get_coords(toponym):
+    toponym_coodrinates = toponym["Point"]["pos"]
+    return toponym_coodrinates
