@@ -27,5 +27,5 @@ class Map:
     def change_coords(self, direction):
         pass
 
-    def change_layer(self):
-        pass
+    def change_layer(self, layer_type):
+        self.typy_map = layer_type
