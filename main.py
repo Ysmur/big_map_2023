@@ -14,6 +14,15 @@ class App:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), vsync=True)
         self.map = Map()
 
+        input_box = pygame.Rect(100, 100, 140, 32)
+        color_inactive = (100, 100, 100)
+        color_active = (200, 200, 200)
+        color = color_inactive
+        active = False
+        self.text = ' '
+        font = 36
+        self.font = pygame.font.Font('pixeboy.ttf', font)
+
         search_button = Button((100, 285), BUTTON_IMAGE, 'search')
         clear_button = Button((100, 200), BUTTON_IMAGE, 'clear')
         search_text_label = Label((500, 75), 'Some address', 70)
@@ -40,11 +49,17 @@ class App:
                         pass
                 elif event.type == pygame.MOUSEWHEEL:
                     self.delta = str(min(4, max(1.5, float(self.map.delta) + event.y / 100)))
-                elif event.type == pygame.KEYDOWN:
+                if event.type == pygame.KEYDOWN:
                     if event.unicode:
-                        # вбиваем в поисковую строку
-                        pass
+                        if event.key == pygame.K_RETURN:
+                            self.text = ''
+                        elif event.key == pygame.K_BACKSPACE:
+                            self.text = self.text[:-1]
+                        else:
+                            self.text += event.unicode
 
+
+            self.txt_surface = self.font.render(self.text, True, color)
             self.draw()
             clock.tick(FPS)
 
@@ -65,6 +80,7 @@ class App:
         for element in self.buttons + self.labels:  # рисуем интерфейс
             element.draw(self.screen)
 
+        self.screen.blit(self.txt_surface, (100, 100))
         pygame.display.update()
 
 
