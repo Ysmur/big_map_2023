@@ -2,7 +2,7 @@ import pygame
 pygame.init()
 
 BUTTON_TEXT_COLOR = (247, 239, 174)
-LABEL_TEXT_COLOR = 'white'
+LABEL_TEXT_COLOR = 'gray'
 
 
 class Texture:
@@ -19,7 +19,7 @@ class Button:
 
         # Настройка шрифтов и размеров
         font = int(self.rect.width // len(self.text) * 1.5)
-        font = pygame.font.Font('pixeboy.ttf', font)
+        font = pygame.font.Font('DroidSansMono.ttf', font)
         self.label = font.render(self.text, True, BUTTON_TEXT_COLOR)
 
         label_width, label_height = font.size(self.text)  # Размеры текста
@@ -37,7 +37,7 @@ class Button:
 
 class Label(Texture):   # класс для надписи
     def __init__(self, position, text, font):
-        self.font = pygame.font.Font('pixeboy.ttf', font)
+        self.font = pygame.font.Font('DroidSansMono.ttf', font)
         self.pos = position
 
         self.change_text(text)
